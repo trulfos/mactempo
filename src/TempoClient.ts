@@ -53,7 +53,8 @@ class TempoClient {
                 return {
                     date: dateStarted.split('T')[0],
                     account: await this.getAccount(key),
-                    seconds: timeSpentSeconds
+                    seconds: timeSpentSeconds,
+                    description: key
                 };
             }) as Array<Promise<TimesheetEntry>>
         );

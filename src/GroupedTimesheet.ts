@@ -27,11 +27,17 @@ interface GroupMap {
 function addToGroupMap(groups: GroupMap, entry: TimesheetEntry) {
     const groupKey = createGroupKey(entry);
     const group = groups[groupKey];
-    const seconds = (group ? group.seconds : 0) + entry.seconds;
+    const groupEntry = group
+        ? {
+            ...entry,
+            seconds: group.seconds + entry.seconds,
+            description: `${group.description}, ${entry.description}`
+        }
+        : entry;
 
     return {
         ...groups,
-        [groupKey]: { ...entry, seconds }
+        [groupKey]: groupEntry
     };
 }
 

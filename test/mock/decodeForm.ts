@@ -7,7 +7,7 @@ function decodeForm(body: string): any {
   return body
     .split('&')
     .map(
-      kv => kv.split('=').map(s => decodeURIComponent(s))
+      kv => kv.split('=').map(s => decodeURIComponent(s.replace('+', '%20')))
     )
     .reduce(
       (obj, e) => ({...obj, [e[0]]: e[1]}),

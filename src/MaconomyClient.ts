@@ -1,4 +1,4 @@
-import Timesheet from './Timesheet';
+import Timesheet, {TimesheetEntry} from './Timesheet';
 import MaconomyError from './MaconomyError';
 import IncorrectHoursError from './IncorrectHoursError';
 import Week from './Week';
@@ -81,25 +81,23 @@ export default class MaconomyClient {
         });
 
         return response.Lines
-        .map(
-            line => ({
-                account: `${line.Fields.JobNumber}/${line.Fields.TaskName}`,
-                key: line.InstanceKey,
-                date: line.Fields.TheDate
-            })
-        );
+            .map(
+                line => ({
+                    account: `${line.Fields.JobNumber}/${line.Fields.TaskName}`,
+                    key: line.InstanceKey,
+                    date: line.Fields.TheDate
+                })
+            );
     }
 
     async updateWith(timesheet: Timesheet) {
-        await toArgs(timesheet).reduce(
-            (promise, {account, date, hours}) => promise.then(
+        await timesheet.getEntries().reduce(
+            (promise, entry) => promise.then(
                 async lineCache => ({
                     ...lineCache,
-                    [account]: await this.updateDateWith(
-                        account,
-                        date,
-                        hours,
-                        lineCache[account]
+                    [entry.account]: await this.updateDateWith(
+                        entry,
+                        lineCache[entry.account]
                     )
                 })
             ),
@@ -107,7 +105,8 @@ export default class MaconomyClient {
         );
     }
 
-    private async updateDateWith(account: string, date: string, hours: number, lineKey?: string) {
+    private async updateDateWith(entry: TimesheetEntry, lineKey?: string) {
+        const {date, account, seconds, description} = entry;
         const [projectId, task] = account.split('/');
         const sessionId = await this.sessionId;
 
@@ -126,8 +125,8 @@ export default class MaconomyClient {
                         Favorite: '',
                         JobNumber: projectId,
                         TaskName: task,
-                        DailyDescription: 'Utvikling',
-                        NumberOf: `'${hours}'`,
+                        DailyDescription: description,
+                        NumberOf: `'${toHours(seconds)}'`,
                         EntryText: undefined,
                         PermanentLine: 'false',
                         InternalJob: 'true',
@@ -198,18 +197,7 @@ function formatDate(date: Date) {
     return date.toISOString().split('T')[0].replace(/-/g, '.');
 }
 
-function toArgs(timesheet: Timesheet) {
-    return timesheet.getEntries()
-        .map(
-            ({account, seconds, date}) => ({
-                account,
-                date,
-                hours: convertHours(seconds)
-            })
-        );
-}
-
-function convertHours(seconds: number) {
+function toHours(seconds: number) {
     if (seconds % 1800 !== 0) {
         throw new IncorrectHoursError(
             'The time given must be a multiple of half hours'

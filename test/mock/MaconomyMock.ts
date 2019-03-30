@@ -13,6 +13,7 @@ interface Line {
     hours: {
         [date: string]: number;
     };
+    description?: string;
 }
 
 class MaconomyMock {
@@ -91,7 +92,6 @@ class MaconomyMock {
   }
 
   private handleSaveTimesheet(req: MaconomyRequest) {
-      // TODO: Validation
       const valid = req.hasProperties({
           reopenIfSubmitted: false
       });
@@ -111,6 +111,7 @@ class MaconomyMock {
           throw new Error('NumberOf must be wrapped in single quotes');
       }
       const hours = Number(match[1]);
+      const description = fields.DailyDescription;
       
       // New line?
       if (lineId === '') {
@@ -121,7 +122,8 @@ class MaconomyMock {
             task: fields.TaskName,
             hours: {
                 [date]: hours
-            }
+            },
+            description
           });
           return {ok: true, Line: {InstanceKey: id}};
       }
@@ -129,6 +131,7 @@ class MaconomyMock {
       const line = this.lines.find(l => l.id === lineId);
       if (line) {
           line.hours[date] = hours;
+          line.description = description;
       } else {
           throw new Error('No line?');
       }
