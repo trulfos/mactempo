@@ -36,7 +36,7 @@ class MaconomyMock {
     mac.persist();
   }
 
-  reset(lines: Line[]) {
+  reset(lines: Line[] = []) {
       this.lines = lines;
   }
 

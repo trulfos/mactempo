@@ -58,7 +58,7 @@ class TempoMock {
     loggedInScope.persist();
   }
 
-  reset(worklogs: Worklog[]) {
+  reset(worklogs: Worklog[] = []) {
     this.worklogs = worklogs;
   }
 

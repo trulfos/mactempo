@@ -35,8 +35,8 @@ const app = new Application(
 );
 
 test('copies nothing to Maconomy when no worklogs exist', async t => {
-    tempoMock.reset([]);
-    maconomyMock.reset([]);
+    tempoMock.reset();
+    maconomyMock.reset();
 
     await app.transferHours();
 
@@ -73,7 +73,7 @@ test('creates a new line when given a single worklog', async t => {
         dateStarted: '2019-03-19T00:00:00.000Z',
         issueKey: 'MYPROJ-34'
     }]);
-    maconomyMock.reset([]);
+    maconomyMock.reset();
 
     await app.transferHours();
 
@@ -88,7 +88,7 @@ test('registers hours for a single worklog', async t => {
         dateStarted: '2019-03-19T00:00:00.000Z',
         issueKey: 'MYPROJ-34'
     }]);
-    maconomyMock.reset([]);
+    maconomyMock.reset();
 
     await app.transferHours();
 
@@ -147,7 +147,7 @@ test('creates single line for same account', async t => {
             issueKey: 'MYPROJ-55'
         }
     ]);
-    maconomyMock.reset([]);
+    maconomyMock.reset();
 
     await app.transferHours();
 
@@ -179,7 +179,7 @@ test('creates multiple lines for different accounts', async t => {
             issueKey: 'MYPROJ-55'
         }
     ]);
-    maconomyMock.reset([]);
+    maconomyMock.reset();
 
     await app.transferHours();
 
@@ -197,8 +197,8 @@ test('creates multiple lines for different accounts', async t => {
 });
 
 test('logs out from jira when done', async t => {
-    tempoMock.reset([]);
-    maconomyMock.reset([]);
+    tempoMock.reset();
+    maconomyMock.reset();
     const logoutCount = tempoMock.getLogoutCount();
 
     await app.transferHours();
