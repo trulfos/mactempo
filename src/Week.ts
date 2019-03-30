@@ -17,6 +17,13 @@ class Week {
         );
     }
 
+    getRange() {
+        return {
+            from: this.getFirst(),
+            to: this.getLast()
+        };
+    }
+
     includes(other: Date) {
         return (
             other >= this.getFirst() &&

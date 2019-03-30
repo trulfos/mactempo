@@ -1,16 +1,11 @@
 import Credentials from './Credentials';
+import Week from './Week';
 
 interface UserInterface {
-    getDateRange(): Promise<DateRange>;
+    getWeek(): Promise<Week>;
     getCredentials(application: string): Promise<Credentials>;
 }
 
-interface DateRange {
-    from: Date;
-    to: Date;
-}
-
 export {
-    UserInterface as default,
-    DateRange
+    UserInterface as default
 };

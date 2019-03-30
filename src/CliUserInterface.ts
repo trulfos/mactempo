@@ -1,5 +1,6 @@
 import {prompt, password} from 'promptly';
 import UserInterface from './UserInterface';
+import Week from './Week';
 
 const greeting = `
  __  __           _____                          
@@ -23,13 +24,12 @@ class CliUserInterface implements UserInterface {
         console.log(greeting);
     }
 
-    async getDateRange() {
-        console.log('\nPlease provide the date range to process (inclusive)');
+    async getWeek() {
+        console.log('\nPlease provide a date in the week you wish to copy');
 
-        return {
-            from: await this.getDate('First date'),
-            to: await this.getDate('Last date')
-        };
+        return new Week(
+            await this.getDate('Date in week')
+        );
     }
 
     async getCredentials(applicationName: string) {

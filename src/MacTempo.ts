@@ -15,11 +15,11 @@ class MacTempo {
 
     async transferHours() {
         const {ui, config} = this;
-        const dateRange = await ui.getDateRange();
-        const jiraCredentials = await ui.getCredentials('Jira');
+        const week = await ui.getWeek();
 
+        const jiraCredentials = await ui.getCredentials('Jira');
         const tempoClient = new TempoClient(config.getJiraBase(), jiraCredentials);
-        const timesheet = await tempoClient.getTimesheet(dateRange);
+        const timesheet = await tempoClient.getTimesheet(week.getRange());
         await tempoClient.logout();
 
         const mappedTimesheet = new MappedTimesheet(

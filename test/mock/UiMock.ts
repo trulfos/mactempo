@@ -1,4 +1,4 @@
-import {Credentials, UserInterface} from '../../src';
+import {Credentials, UserInterface, Week} from '../../src';
 
 class UiMock implements UserInterface {
     private credentials: Credentials;
@@ -7,8 +7,8 @@ class UiMock implements UserInterface {
         this.credentials = credentials;
     }
 
-    async getDateRange() {
-        return {from: new Date('2019-03-18'), to: new Date('2019-03-20')};
+    async getWeek() {
+        return new Week(new Date('2019-03-18'));
     }
 
     async getCredentials() {
