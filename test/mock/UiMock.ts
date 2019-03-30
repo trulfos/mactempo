@@ -1,5 +1,4 @@
-import Credentials from '../../src/Credentials';
-import UserInterface from '../../src/UserInterface';
+import {Credentials, UserInterface} from '../../src';
 
 class UiMock implements UserInterface {
     private credentials: Credentials;

@@ -11,7 +11,7 @@
     "test": "ts-node test/application.ts"
   },
   "bin": {
-    "mactempo": "dist/src/index.js"
+    "mactempo": "dist/src/cli.js"
   },
   "dependencies": {
     "global-tunnel-ng": "^2.6.0",

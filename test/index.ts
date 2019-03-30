@@ -1,11 +1,7 @@
 import test from 'tape';
 import nock from 'nock';
-
-import Application from '../src/Application';
-import IncorrectHoursError from '../src/IncorrectHoursError';
-
+import {Application, IncorrectHoursError, LiteralConfig} from '../src';
 import {MaconomyMock, TempoMock,  UiMock} from './mock';
-import LiteralConfig from '../src/LiteralConfig';
 
 // Block all requests to unmocked hosts
 nock.disableNetConnect()

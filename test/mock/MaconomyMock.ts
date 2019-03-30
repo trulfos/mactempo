@@ -1,6 +1,5 @@
 import nock from 'nock';
-import Week from '../../src/Week';
-import Credentials from '../../src/Credentials';
+import {Week, Credentials} from '../../src';
 import MaconomyRequest from './MaconomyRequest';
 import decodeForm from './decodeForm';
 

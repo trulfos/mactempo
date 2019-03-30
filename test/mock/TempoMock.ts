@@ -1,5 +1,5 @@
 import nock from 'nock';
-import Credentials from '../../src/Credentials';
+import {Credentials} from '../../src';
 import decodeForm from './decodeForm';
 
 interface Worklog {
