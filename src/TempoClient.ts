@@ -1,7 +1,8 @@
 const got = require('got');
 import {CookieJar} from 'tough-cookie';
 
-import Timesheet from './Timesheet';
+import Timesheet, {TimesheetEntry} from './Timesheet';
+import GroupedTimesheet from './GroupedTimesheet';
 import Credentials from './Credentials';
 
 /**
@@ -42,7 +43,7 @@ class TempoClient {
         const worklogs = await this.fetchWorklogs(dateRange);
 
         const entries = await Promise.all(
-            worklogs.map(async (worklog: Worklog): Promise<SimpleWorklog> => {
+            worklogs.map(async (worklog: Worklog): Promise<TimesheetEntry> => {
                 const {
                     dateStarted,
                     timeSpentSeconds,
@@ -51,25 +52,15 @@ class TempoClient {
 
                 return {
                     date: dateStarted.split('T')[0],
-                    projectId: await this.getProjectId(key),
+                    account: await this.getAccount(key),
                     seconds: timeSpentSeconds
                 };
-            }) as Array<Promise<SimpleWorklog>>
+            }) as Array<Promise<TimesheetEntry>>
         );
 
-        const timesheet = entries.reduce<Timesheet>(
-            (timesheet: Timesheet, log: SimpleWorklog): Timesheet => ({
-                ...timesheet,
-                [log.projectId]: {
-                    ...timesheet[log.projectId],
-                    [log.date]: ((timesheet[log.projectId] || {} as any)[log.date] || 0) + log.seconds
-                }
-            }),
-            {}
+        return Promise.resolve(
+            new GroupedTimesheet(entries)
         );
-
-
-        return Promise.resolve(timesheet);
     }
 
     async fetchWorklogs(dateRange: {from: Date; to: Date}) {
@@ -81,7 +72,7 @@ class TempoClient {
         return this.request(worklogsUrl).then((r: any) => r.body);
     }
 
-    async getProjectId(issueKey: string) {
+    async getAccount(issueKey: string) {
         const {keyCache} = this;
 
         if (keyCache[issueKey]) {
@@ -119,12 +110,6 @@ interface Worklog {
     issue: {
         key: string;
     };
-}
-
-interface SimpleWorklog {
-    date: string;
-    projectId: string;
-    seconds: number;
 }
 
 function toSimpleIsoDate(date: Date) {

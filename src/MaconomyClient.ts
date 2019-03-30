@@ -199,16 +199,14 @@ function formatDate(date: Date) {
 }
 
 function toArgs(timesheet: Timesheet) {
-    return Object.entries(timesheet)
+    return timesheet.getEntries()
         .map(
-            ([account, hourMap]) => Object.entries(hourMap)
-                .map(([date, seconds]) => ({
-                    account,
-                    date,
-                    hours: convertHours(seconds)
-                }))
-        )
-        .reduce(toFlatList, []);
+            ({account, seconds, date}) => ({
+                account,
+                date,
+                hours: convertHours(seconds)
+            })
+        );
 }
 
 function convertHours(seconds: number) {
@@ -219,10 +217,6 @@ function convertHours(seconds: number) {
     }
 
     return seconds / 3600;
-}
-
-function toFlatList<T>(result: T[], partial: T[]) {
-    return result.concat(partial);
 }
 
 interface GetPeriodResponse {
