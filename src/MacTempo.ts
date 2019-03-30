@@ -5,7 +5,7 @@ import MaconomyClient from './MaconomyClient';
 import AccountMap from './AccountMap';
 import Config from './Config';
 
-class Application {
+class MacTempo {
     private readonly ui: UserInterface;
     private readonly config: Config;
 
@@ -50,4 +50,4 @@ function mapAccounts(timesheet: Timesheet, accountMap: AccountMap): Timesheet {
     );
 }
 
-export default Application;
+export default MacTempo;

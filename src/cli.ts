@@ -2,13 +2,13 @@ require('global-tunnel-ng').initialize();
 
 import CliUserInterface from './CliUserInterface';
 import FileConfig from './FileConfig';
-import Application from './Application';
+import MacTempo from './MacTempo';
 
 async function run() {
     const config = new FileConfig();
     const ui = new CliUserInterface();
 
-    await new Application(ui, config).transferHours();
+    await new MacTempo(ui, config).transferHours();
 }
 
 run();

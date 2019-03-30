@@ -1,6 +1,6 @@
 import test from 'tape';
 import nock from 'nock';
-import {Application, IncorrectHoursError, LiteralConfig} from '../src';
+import {MacTempo, IncorrectHoursError, LiteralConfig} from '../src';
 import {MaconomyMock, TempoMock,  UiMock} from './mock';
 
 // Block all requests to unmocked hosts
@@ -29,7 +29,7 @@ const maconomyMock = new MaconomyMock(
     credentials
 );
 
-const app = new Application(
+const app = new MacTempo(
     uiMock,
     configMock
 );
