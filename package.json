@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "yarn build && node ./dist/index.js",
-    "test": "ts-node test/application.ts"
+    "start": "node ./dist/src/cli.js",
+    "test": "node ./dist/test/index.js"
   },
   "bin": {
     "mactempo": "dist/src/cli.js"
@@ -28,7 +28,6 @@
     "@types/tough-cookie": "^2.3.3",
     "nock": "^10.0.6",
     "tape": "^4.10.1",
-    "ts-node": "^8.0.3",
     "typescript": "^3.3.0"
   }
 }

@@ -50,9 +50,36 @@ proxying, while all other hosts are accessed through proxy.mycompany.com.
 ## Custom certificate authorities
 
 Some companies use their own certificate authorities. Use the environment
-variable `NODE_EXTRA_CA_CERTS` for these cases.
+variable
+[`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file)
+for these cases.
 
-# Aknowledgements
+## Aknowledgements
 
-The Maconomy integration is based on the `maconomy` NPM-package by Hanse. Thanks
-for the reverse engineering!
+The Maconomy integration is based on the
+[`maconomy`](https://github.com/Hanse/maconomy) npm package by Hanse and
+would never be possible without his reverse engineering.
+
+## Development
+
+Pull requests are welcome, but do ensure all tests are running and that new
+tests are added for the new functionality and bug fixes.
+
+### Running the tests
+
+A single run of the tests can be done by issuing the command
+```
+yarn build
+yarn test
+```
+
+Running the test continuously (as when doing development) is significantly
+speedier when running the build in watch mode:
+```
+yarn build --watch
+```
+Use your favorite utility for watching the dist folder and running the tests
+(`yarn test`) on change or with a given interval. The test ouput is in machine
+readable format and can be piped to any software claiming to prettify the Test
+Anything Protocol (TAP), such as
+[tap-spec](https://github.com/scottcorgan/tap-spec).
