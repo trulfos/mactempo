@@ -1,14 +1,14 @@
-import {prompt, password} from 'promptly';
+import {password, prompt} from 'promptly';
 import UserInterface from './UserInterface';
 import Week from './Week';
 
 const greeting = `
- __  __           _____                          
-|  \\/  | __ _  __|_   _|__ _ __ ___  _ __   ___  
-| |\\/| |/ _\` |/ __|| |/ _ \\ '_ \` _ \\| '_ \\ / _ \\ 
+ __  __           _____
+|  \\/  | __ _  __|_   _|__ _ __ ___  _ __   ___
+| |\\/| |/ _\` |/ __|| |/ _ \\ '_ \` _ \\| '_ \\ / _ \\
 | |  | | (_| | (__ | |  __/ | | | | | |_) | (_) |
-|_|  |_|\\__,_|\\___||_|\\___|_| |_| |_| .__/ \\___/ 
-                                    |_|          
+|_|  |_|\\__,_|\\___||_|\\___|_| |_| |_| .__/ \\___/
+                                    |_|
 -------------------------------------------------
 Your highway from Tempo to Maconomy. Please remember
 to double check the hours after import and remember
@@ -19,12 +19,13 @@ Have fun!
 `;
 
 // TODO: Rename (command line interface user interface??)
+// tslint:disable:no-console
 class CliUserInterface implements UserInterface {
     constructor() {
         console.log(greeting);
     }
 
-    async getWeek() {
+    public async getWeek() {
         console.log('\nPlease provide a date in the week you wish to copy');
 
         return new Week(
@@ -32,12 +33,12 @@ class CliUserInterface implements UserInterface {
         );
     }
 
-    async getCredentials(applicationName: string) {
+    public async getCredentials(applicationName: string) {
         console.log(`\nPlease provide your credentials for ${applicationName}`);
 
         return {
-            username: await prompt('Username: '),
-            password: await password('Password: ')
+            password: await password('Password: '),
+            username: await prompt('Username: ')
         };
     }
 
@@ -45,8 +46,8 @@ class CliUserInterface implements UserInterface {
         const defaultValue = new Date().toISOString().split('T')[0];
 
         const config = {
-            validator: dateValidator,
-            default: defaultValue
+            default: defaultValue,
+            validator: dateValidator
         };
 
         return await prompt(`${message} [${defaultValue}]: `, config);

@@ -1,10 +1,10 @@
-import test from 'tape';
 import nock from 'nock';
-import {MacTempo, IncorrectHoursError, LiteralConfig} from '../src';
+import test from 'tape';
+import {IncorrectHoursError, LiteralConfig, MacTempo} from '../src';
 import {MaconomyMock, TempoMock,  UiMock} from './mock';
 
 // Block all requests to unmocked hosts
-nock.disableNetConnect()
+nock.disableNetConnect();
 
 const credentials = {username: 'max', password: 'soccer123'};
 
@@ -162,7 +162,7 @@ test('leaves existing Maconomy lines alone', async t => {
     t.equal(lines.length, 2);
     t.assert(
         lines.some(l => l.project === '1100433' && l.hours['2019-03-19'] === 3)
-    )
+    );
     t.end();
 });
 
@@ -196,8 +196,8 @@ test('creates single line for same account', async t => {
     t.deepEqual(
         lines[0].hours,
         {
-            '2019.03.19': 1.5,
-            '2019.03.18': 0.5
+            '2019.03.18': 0.5,
+            '2019.03.19': 1.5
         }
     );
 

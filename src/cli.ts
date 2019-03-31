@@ -1,3 +1,4 @@
+// tslint:disable-next-line
 require('global-tunnel-ng').initialize();
 
 import CliUserInterface from './CliUserInterface';

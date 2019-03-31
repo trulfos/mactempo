@@ -1,9 +1,9 @@
-const got = require('got');
+import got from 'got';
 import {CookieJar} from 'tough-cookie';
 
-import Timesheet, {TimesheetEntry} from './Timesheet';
-import GroupedTimesheet from './GroupedTimesheet';
 import Credentials from './Credentials';
+import GroupedTimesheet from './GroupedTimesheet';
+import Timesheet, {TimesheetEntry} from './Timesheet';
 
 /**
  * Communicates with Tempo.
@@ -27,19 +27,19 @@ class TempoClient {
                 cookieJar,
                 json: true,
                 body: credentials
-            }
+            } as any
         )
         .then(() => cookieJar);
     }
 
-    async logout() {
+    public async logout() {
         await got.delete(
             `${this.url}/rest/auth/1/session`,
-            {cookieJar: await this.cookieJar}
+            {cookieJar: await this.cookieJar} as any
         );
     }
 
-    async getTimesheet(dateRange: {from: Date; to: Date}): Promise<Timesheet> {
+    public async getTimesheet(dateRange: {from: Date; to: Date}): Promise<Timesheet> {
         const worklogs = await this.fetchWorklogs(dateRange);
 
         const entries = await Promise.all(
@@ -64,7 +64,7 @@ class TempoClient {
         );
     }
 
-    async fetchWorklogs(dateRange: {from: Date; to: Date}) {
+    public async fetchWorklogs(dateRange: {from: Date; to: Date}) {
         const worklogsUrl = `${this.url}/rest/tempo-timesheets/3/worklogs` +
             `?dateFrom=${toSimpleIsoDate(dateRange.from)}` +
             `&dateTo=${toSimpleIsoDate(dateRange.to)}` +
@@ -73,7 +73,7 @@ class TempoClient {
         return this.request(worklogsUrl).then((r: any) => r.body);
     }
 
-    async getAccount(issueKey: string) {
+    public async getAccount(issueKey: string) {
         const {keyCache} = this;
 
         if (keyCache[issueKey]) {
@@ -97,7 +97,7 @@ class TempoClient {
         const options = {
             cookieJar: await this.cookieJar,
             json: true
-        };
+        } as any;
 
         return got(url, options);
     }

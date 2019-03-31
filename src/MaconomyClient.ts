@@ -1,17 +1,17 @@
-import Timesheet, {TimesheetEntry} from './Timesheet';
-import MaconomyError from './MaconomyError';
+import got from 'got';
 import IncorrectHoursError from './IncorrectHoursError';
+import MaconomyError from './MaconomyError';
+import Timesheet, {TimesheetEntry} from './Timesheet';
 import Week from './Week';
-const got = require('got');
 
 export interface Line {
-    date: string,
-    task: string,
-    hours: string,
-    projectId: string,
-    text: string,
-    dailyDescription: string,
-    lineKey: string
+    date: string;
+    task: string;
+    hours: string;
+    projectId: string;
+    text: string;
+    dailyDescription: string;
+    lineKey: string;
 }
 
 interface Credentials {
@@ -46,7 +46,7 @@ export default class MaconomyClient {
             .then(response => response.sessionid);
     }
 
-    async getExistingLines(date: Date) {
+    public async getExistingLines(date: Date) {
         const week = new Week(date);
         const startDate = formatDate(week.getFirst());
         const endDate = formatDate(week.getLast());
@@ -90,7 +90,7 @@ export default class MaconomyClient {
             );
     }
 
-    async updateWith(timesheet: Timesheet) {
+    public async updateWith(timesheet: Timesheet) {
         await timesheet.getEntries().reduce(
             (promise, entry) => promise.then(
                 async lineCache => ({
@@ -166,7 +166,7 @@ export default class MaconomyClient {
         return response.Line && response.Line.InstanceKey;
     }
 
-    async executeRpc(request: object) {
+    private async executeRpc(request: object) {
         const body = {
             requestobj: JSON.stringify(request),
             functionname: 'executerequest',
@@ -208,19 +208,19 @@ function toHours(seconds: number) {
 }
 
 interface GetPeriodResponse {
-    operation: 'getperiod',
-    sessionid: string,
-    ok: boolean,
-    message: string,
-    EmployeeNumber: string,
-    timeout: boolean,
+    operation: 'getperiod';
+    sessionid: string;
+    ok: boolean;
+    message: string;
+    EmployeeNumber: string;
+    timeout: boolean;
     Lines: Array<{
-        InstanceKey: string; //'TimeSheetLine28054C21-3D73-4A97-A69C-40863E245FA5',
+        InstanceKey: string; // 'TimeSheetLine28054C21-3D73-4A97-A69C-40863E245FA5',
         TimeStamp: string; // '2018-09-30 21:16:31.530',
-        DisplayName: string,
-        CanCopyTimeSheetLine: boolean,
-        CanEditTimeSheetLine: boolean,
-        CanDeleteTimeSheetLine: boolean,
+        DisplayName: string;
+        CanCopyTimeSheetLine: boolean;
+        CanEditTimeSheetLine: boolean;
+        CanDeleteTimeSheetLine: boolean;
         Fields: {
             TheDate: string;
             JobNumber: string;
@@ -228,28 +228,28 @@ interface GetPeriodResponse {
             TaskDescriptionVar: string;
             CustomerNameVar: string;
         };
-    }>,
+    }>;
     BusinessDays: string[]; // ['2018.10.01',...,'2018.10.05']
     DayTotals: Array<{
-        TheDate: string, // f. ex. '2018.10.07',
-        ShortDate: string, // f. ex. '10/07',
-        WeekDay: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday',
-        ExternalRegisteredTimeQuantity: number,
-        InternalRegisteredTimeQuantity: number,
-        TotalRegisteredTimeQuantity: number,
-        FixedWorkingTime: number,
-        OvertimeHours: number,
-        timeRegistrationUnit: string // f. ex. 'Hours'
-    }>,
-    ReopenTimesheetAction: boolean,
-    SubmittedAction: boolean,
-    EditableAction: boolean,
-    CanAddTimeSheetLine: boolean,
-    CanEditTimeSheetLine: boolean,
-    CanDeleteTimeSheetLine: boolean,
-    currentlyinuse: boolean,
-    closed: 'N' | 'Y',
-    weekNumber: number,
-    part: string,
-    submitted: 'N' | 'Y'
+        TheDate: string; // f. ex. '2018.10.07',
+        ShortDate: string; // f. ex. '10/07',
+        WeekDay: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
+        ExternalRegisteredTimeQuantity: number;
+        InternalRegisteredTimeQuantity: number;
+        TotalRegisteredTimeQuantity: number;
+        FixedWorkingTime: number;
+        OvertimeHours: number;
+        timeRegistrationUnit: string; // f. ex. 'Hours'
+    }>;
+    ReopenTimesheetAction: boolean;
+    SubmittedAction: boolean;
+    EditableAction: boolean;
+    CanAddTimeSheetLine: boolean;
+    CanEditTimeSheetLine: boolean;
+    CanDeleteTimeSheetLine: boolean;
+    currentlyinuse: boolean;
+    closed: 'N' | 'Y';
+    weekNumber: number;
+    part: string;
+    submitted: 'N' | 'Y';
 }

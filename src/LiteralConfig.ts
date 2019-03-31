@@ -13,15 +13,15 @@ class LiteralConfig implements Config {
     this.config = config;
   }
 
-  getMaconomyBase() {
+  public getMaconomyBase() {
     return this.config.maconomyBase;
   }
 
-  getJiraBase() {
+  public getJiraBase() {
     return this.config.jiraBase;
   }
 
-  getAccountMap() {
+  public getAccountMap() {
     return this.config.accountMap;
   }
 }

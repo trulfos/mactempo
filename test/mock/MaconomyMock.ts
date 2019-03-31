@@ -1,7 +1,7 @@
 import nock from 'nock';
-import {Week, Credentials} from '../../src';
-import MaconomyRequest from './MaconomyRequest';
+import {Credentials, Week} from '../../src';
 import decodeForm from './decodeForm';
+import MaconomyRequest from './MaconomyRequest';
 
 const endpoint = '/DeltekTouch/Maconomy/Time/maconomyshared/backend/RemoteCall.php';
 
@@ -37,15 +37,15 @@ class MaconomyMock {
     mac.persist();
   }
 
-  reset(lines: Line[] = []) {
+  public reset(lines: Line[] = []) {
       this.lines = lines;
   }
 
-  getLines() {
+  public getLines() {
       return this.lines;
   }
 
-  private generateResponse(_uri: string, stringBody: string) {
+  private generateResponse(_: string, stringBody: string) {
     const body = decodeForm(stringBody);
 
     if (
@@ -112,7 +112,7 @@ class MaconomyMock {
       }
       const hours = Number(match[1]);
       const description = fields.DailyDescription;
-      
+
       // New line?
       if (lineId === '') {
           const id = `TimeSheetLine-${this.lastLineId++}`;
@@ -195,7 +195,7 @@ class MaconomyMock {
    */
 
       // Generate output
-    return toPeriod(this.sessionId, this.lines);
+      return toPeriod(this.sessionId, this.lines);
   }
 
   private handleLogin(req: MaconomyRequest) {

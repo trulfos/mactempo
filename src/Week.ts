@@ -5,26 +5,26 @@ class Week {
         this.date = date;
     }
 
-    getFirst() {
+    public getFirst() {
         return this.withDate(
             this.getFirstDate()
         );
     }
 
-    getLast() {
+    public getLast() {
         return this.withDate(
             this.getLastDate()
         );
     }
 
-    getRange() {
+    public getRange() {
         return {
             from: this.getFirst(),
             to: this.getLast()
         };
     }
 
-    includes(other: Date) {
+    public includes(other: Date) {
         return (
             other >= this.getFirst() &&
             other <= this.getLast()

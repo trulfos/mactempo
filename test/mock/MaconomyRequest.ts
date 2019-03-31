@@ -5,7 +5,7 @@ class MaconomyRequest {
     this.body = body;
   }
 
-  hasProperties(props: object) {
+  public hasProperties(props: object) {
     const obj = this.getRequestObject();
 
     return Object.entries(props).every(
@@ -16,15 +16,15 @@ class MaconomyRequest {
     );
   }
 
-  getOperation() {
+  public getOperation() {
     return this.getRequestObject().operation;
   }
 
-  getRequestObject() {
+  public getRequestObject() {
     return JSON.parse(this.body.requestobj).inpObj;
   }
 
-  getSessionId() {
+  public getSessionId() {
     return this.getRequestObject().sessionid;
   }
 }

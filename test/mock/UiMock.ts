@@ -7,13 +7,13 @@ class UiMock implements UserInterface {
         this.credentials = credentials;
     }
 
-    async getWeek() {
+    public async getWeek() {
         return new Week(new Date('2019-03-18'));
     }
 
-    async getCredentials() {
+    public async getCredentials() {
         return this.credentials;
     }
-};
+}
 
 export default UiMock;

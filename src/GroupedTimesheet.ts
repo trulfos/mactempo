@@ -2,7 +2,7 @@ import Timesheet, {TimesheetEntry} from './Timesheet';
 
 /**
  * Groups all entries in a timesheet by account and date.
- * 
+ *
  * This ensures there is only one entry per unique pair of account and date.
  */
 class GroupedTimesheet implements Timesheet {
@@ -12,7 +12,7 @@ class GroupedTimesheet implements Timesheet {
         this.worklogs = worklogs;
     }
 
-    getEntries() {
+    public getEntries() {
         const groups = this.worklogs
             .reduce<GroupMap>(addToGroupMap, {});
 

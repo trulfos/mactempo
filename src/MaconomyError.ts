@@ -1,5 +1,5 @@
 export default class MaconomyError extends Error {
-    response: any;
+    public response: any;
 
     constructor(response: any) {
         super(response.Message || response.message || 'Unknown');

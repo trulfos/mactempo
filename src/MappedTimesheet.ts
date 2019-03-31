@@ -1,5 +1,5 @@
-import Timesheet from './Timesheet';
 import AccountMap from './AccountMap';
+import Timesheet from './Timesheet';
 
 /**
  * Maps one timesheet to a different timesheet where all the accounts have been
@@ -14,7 +14,7 @@ class MappedTimesheet implements Timesheet {
         this.delegate = delegate;
     }
 
-    getEntries() {
+    public getEntries() {
         return this.delegate.getEntries()
             .map(entry => ({
                 ...entry,

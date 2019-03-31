@@ -39,7 +39,7 @@ class TempoMock {
         'cookie',
         (c: string) => c === this.getCookie()
     );
-    
+
     loggedInScope
         .get('/rest/tempo-timesheets/3/worklogs')
         .query((params: any) => params.username === username)
@@ -52,17 +52,17 @@ class TempoMock {
     loggedInScope
         .get(/\/rest\/api\/2\/issue\/.+/)
         .query(true)
-        .reply(200, this.getIssue.bind(this))
+        .reply(200, this.getIssue.bind(this));
 
     jira.persist();
     loggedInScope.persist();
   }
 
-  reset(worklogs: Worklog[] = []) {
+  public reset(worklogs: Worklog[] = []) {
     this.worklogs = worklogs;
   }
 
-  getLogoutCount() {
+  public getLogoutCount() {
       return this.logoutCount;
   }
 
@@ -93,7 +93,7 @@ class TempoMock {
 
       const issueKey = match[1];
       const params = decodeSearch(uri);
-      if (params.fields != 'customfield_11961') {
+      if (params.fields !== 'customfield_11961') {
           return {fields: {}};
       }
 

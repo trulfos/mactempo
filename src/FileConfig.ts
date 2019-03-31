@@ -1,6 +1,6 @@
+import {existsSync, readFileSync} from 'fs';
 import {homedir} from 'os';
 import {resolve} from 'path';
-import {readFileSync, existsSync} from 'fs';
 import {isConfigObject} from './ConfigObject';
 import LiteralConfig from './LiteralConfig';
 
