@@ -185,7 +185,6 @@ test('creates multiple lines for different accounts', async t => {
 
     const lines = maconomyMock.getLines();
 
-    t.assert
     t.assert(
         lines.every(l => (
             l.project === '3423' && l.hours['2019.03.19'] === 0.5 ||
