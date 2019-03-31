@@ -62,8 +62,10 @@ would never be possible without his reverse engineering.
 
 ## Development
 
-Pull requests are welcome, but do ensure all tests are running and that new
-tests are added for the new functionality and bug fixes.
+Pull requests are welcome, but do ensure
+    * all tests are running and that new
+    * tests are added for the new functionality and bug fixes, and
+    * there are no lint errors.
 
 ### Running the tests
 
@@ -83,3 +85,11 @@ Use your favorite utility for watching the dist folder and running the tests
 readable format and can be piped to any software claiming to prettify the Test
 Anything Protocol (TAP), such as
 [tap-spec](https://github.com/scottcorgan/tap-spec).
+
+### Linting
+
+Run
+```
+yarn lint
+```
+to get a list of lint errors (if any).
