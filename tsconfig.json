@@ -10,7 +10,9 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "types",
+    "typeRoots": ["types"]
   },
   "files": [
     "src/index.ts",

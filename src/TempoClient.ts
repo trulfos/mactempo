@@ -27,7 +27,7 @@ class TempoClient {
                 cookieJar,
                 json: true,
                 body: credentials
-            } as any
+            }
         )
         .then(() => cookieJar);
     }
@@ -35,7 +35,7 @@ class TempoClient {
     public async logout() {
         await got.delete(
             `${this.url}/rest/auth/1/session`,
-            {cookieJar: await this.cookieJar} as any
+            {cookieJar: await this.cookieJar}
         );
     }
 
@@ -97,7 +97,7 @@ class TempoClient {
         const options = {
             cookieJar: await this.cookieJar,
             json: true
-        } as any;
+        };
 
         return got(url, options);
     }
