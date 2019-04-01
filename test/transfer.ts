@@ -1,38 +1,16 @@
-import nock from 'nock';
 import test from 'tape';
-import {IncorrectHoursError, LiteralConfig, MacTempo} from '../src';
-import {MaconomyMock, TempoMock,  UiMock} from './mock';
+import {IncorrectHoursError} from '../src';
+import {configureApp, maconomyMock, tempoMock} from './mock';
 
-// Block all requests to unmocked hosts
-nock.disableNetConnect();
+/**
+ * These tests checks whether the copying of hours from Tempo to Maconomy works,
+ * considering mostly the base cases.
+ */
 
-const credentials = {username: 'max', password: 'soccer123'};
-
-const uiMock = new UiMock(credentials);
-
-const configMock = new LiteralConfig({
-  jiraBase: 'https://jira.mycompany.com',
-  maconomyBase: 'https://touch.mycompany.com',
-  accountMap: {
-      '9343X': '3423/1004',
-      '3423-4': '4234/1002'
-  }
+const app = configureApp({
+    '9343X': '3423/1004',
+    '3423-4': '4234/1002'
 });
-
-const tempoMock = new TempoMock(
-    'https://jira.mycompany.com',
-    credentials
-);
-
-const maconomyMock = new MaconomyMock(
-    'https://touch.mycompany.com',
-    credentials
-);
-
-const app = new MacTempo(
-    uiMock,
-    configMock
-);
 
 test('copies nothing to Maconomy when no worklogs exist', async t => {
     tempoMock.reset();
@@ -99,46 +77,6 @@ test('registers hours for a single worklog', async t => {
     t.equal(line.hours['2019.03.19'], 1);
     t.equal(line.project, '3423');
     t.equal(line.task, '1004');
-    t.end();
-});
-
-test('uses Jira issue numbers for task description in Maconomy', async t => {
-    tempoMock.reset([{
-        timeSpentSeconds: 3600,
-        account: '9343X',
-        dateStarted: '2019-03-19T00:00:00.000Z',
-        issueKey: 'MYPROJ-34'
-    }]);
-    maconomyMock.reset();
-
-    await app.transferHours();
-
-    const lines = maconomyMock.getLines();
-    t.equal(lines[0].description, 'MYPROJ-34');
-    t.end();
-});
-
-test('supports multiple issues in task description', async t => {
-    tempoMock.reset([
-        {
-            timeSpentSeconds: 3600,
-            account: '9343X',
-            dateStarted: '2019-03-19T00:00:00.000Z',
-            issueKey: 'MYPROJ-34'
-        },
-        {
-            timeSpentSeconds: 3600,
-            account: '9343X',
-            dateStarted: '2019-03-19T00:00:00.000Z',
-            issueKey: 'MYPROJ-35'
-        }
-    ]);
-    maconomyMock.reset();
-
-    await app.transferHours();
-
-    const lines = maconomyMock.getLines();
-    t.equal(lines[0].description, 'MYPROJ-34, MYPROJ-35');
     t.end();
 });
 

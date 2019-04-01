@@ -16,11 +16,9 @@
   },
   "files": [
     "src/index.ts",
-    "src/cli.ts",
-    "test/index.ts"
+    "src/cli.ts"
   ],
-  "includes": [
-    "src/*.ts",
+  "include": [
     "test/*.ts"
   ]
 }

@@ -9,7 +9,7 @@
     "build": "tsc",
     "clean": "rm -r dist",
     "start": "node ./dist/src/cli.js",
-    "test": "node ./dist/test/index.js",
+    "test": "tape ./dist/test/*.js",
     "lint": "tslint --project ."
   },
   "bin": {
