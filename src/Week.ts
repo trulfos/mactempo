@@ -34,7 +34,7 @@ class Week {
     private getFirstDate() {
         const {date} = this;
         return clamp(
-                date.getDate() - date.getDay() + 1,
+                date.getDate() - (date.getDay() + 6) % 7,
                 1,
                 lastDayOfMonth(date)
         );
@@ -42,7 +42,7 @@ class Week {
 
     private getLastDate() {
         return Math.min(
-            this.getFirstDate() + 7,
+            this.getFirstDate() + 6,
             lastDayOfMonth(this.date)
         );
     }
@@ -57,12 +57,11 @@ class Week {
 export default Week;
 
 function lastDayOfMonth(date: Date) {
-    const a = new Date(date);
-
-    a.setMonth(a.getMonth() + 1);
-    a.setDate(0);
-
-    return a.getDate();
+    return new Date(
+        date.getFullYear(),
+        date.getMonth() + 1,
+        0
+    ).getDate();
 }
 
 function clamp(value: number, min: number, max: number) {

@@ -127,10 +127,10 @@ function toJiraWorklog(worklog: Worklog) {
 }
 
 function byStartDate({dateFrom, dateTo}: {dateFrom: string, dateTo: string}) {
-  return (worklog: Worklog) => {
-    const date = worklog.dateStarted;
-    return dateFrom <= date && date <= dateTo;
-  };
+    return (worklog: Worklog) => {
+        const date = worklog.dateStarted.split('T')[0];
+        return dateFrom <= date && date <= dateTo;
+    };
 }
 
 function byIssueKey(key: string) {
@@ -138,7 +138,7 @@ function byIssueKey(key: string) {
 }
 
 function decodeSearch(url: string) {
-  return decodeForm(url.split('?')[1]);
+    return decodeForm(url.split('?')[1]);
 }
 
 export default TempoMock;

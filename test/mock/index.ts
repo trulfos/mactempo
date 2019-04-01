@@ -12,8 +12,6 @@ const credentials = {
     password: 'soccer123'
 };
 
-const uiMock = new UiMock(credentials);
-
 const tempoMock = new TempoMock(
     'https://jira.mycompany.com',
     credentials
@@ -24,12 +22,17 @@ const maconomyMock = new MaconomyMock(
     credentials
 );
 
-function configureApp(accountMap: AccountMap) {
+function configureApp(accountMap: AccountMap, date?: string) {
     const configMock = new LiteralConfig({
         jiraBase: 'https://jira.mycompany.com',
         maconomyBase: 'https://touch.mycompany.com',
         accountMap
     });
+
+    const uiMock = new UiMock(
+        credentials,
+        new Date(date || '2019-03-18')
+    );
 
     return new MacTempo(
         uiMock,

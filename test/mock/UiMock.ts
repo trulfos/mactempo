@@ -1,14 +1,16 @@
 import {Credentials, UserInterface, Week} from '../../src';
 
 class UiMock implements UserInterface {
-    private credentials: Credentials;
+    private readonly credentials: Credentials;
+    private readonly date: Date;
 
-    constructor(credentials: Credentials) {
+    constructor(credentials: Credentials, date: Date) {
         this.credentials = credentials;
+        this.date = date;
     }
 
     public async getWeek() {
-        return new Week(new Date('2019-03-18'));
+        return new Week(this.date);
     }
 
     public async getCredentials() {
