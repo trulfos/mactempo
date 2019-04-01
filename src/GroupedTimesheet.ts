@@ -1,3 +1,4 @@
+import GroupedTimesheetEntry from './GroupedTimesheetEntry';
 import Timesheet, {TimesheetEntry} from './Timesheet';
 
 /**
@@ -16,33 +17,27 @@ class GroupedTimesheet implements Timesheet {
         const groups = this.worklogs
             .reduce<GroupMap>(addToGroupMap, {});
 
-        return Object.values(groups);
+        return Object.values(groups)
+            .map(g => new GroupedTimesheetEntry(g));
     }
 }
 
 interface GroupMap {
-    [groupKey: string]: TimesheetEntry;
+    [groupKey: string]: TimesheetEntry[];
 }
 
 function addToGroupMap(groups: GroupMap, entry: TimesheetEntry) {
     const groupKey = createGroupKey(entry);
     const group = groups[groupKey];
-    const groupEntry = group
-        ? {
-            ...entry,
-            seconds: group.seconds + entry.seconds,
-            description: `${group.description}, ${entry.description}`
-        }
-        : entry;
 
     return {
         ...groups,
-        [groupKey]: groupEntry
+        [groupKey]: group ? group.concat(entry) : [entry]
     };
 }
 
 function createGroupKey(entry: TimesheetEntry) {
-    return `${encodeURIComponent(entry.account)}/${entry.date}`;
+    return `${encodeURIComponent(entry.getAccount())}/${entry.getDate()}`;
 }
 
 export {

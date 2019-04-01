@@ -1,8 +1,8 @@
 interface TimesheetEntry {
-    date: string; // yyyy-mm-dd
-    account: string;
-    seconds: number;
-    description: string;
+    getDate(): string; // yyyy-mm-dd
+    getAccount(): string;
+    getSeconds(): number;
+    getDescription(): string;
 }
 
 interface Timesheet {

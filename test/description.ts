@@ -44,3 +44,25 @@ test('supports multiple issues in task description', async t => {
     t.equal(lines[0].description, 'MYPROJ-34, MYPROJ-35');
     t.end();
 });
+
+test('deduplicates issue numbers in task description', async t => {
+    const issue = {
+        timeSpentSeconds: 3600,
+        account: '9343X',
+        dateStarted: '2019-03-19T00:00:00.000Z',
+        issueKey: 'MYPROJ-34'
+    };
+
+    tempoMock.reset([
+        issue,
+        issue,
+        issue
+    ]);
+    maconomyMock.reset();
+
+    await app.transferHours();
+
+    const lines = maconomyMock.getLines();
+    t.equal(lines[0].description, 'MYPROJ-34');
+    t.end();
+});

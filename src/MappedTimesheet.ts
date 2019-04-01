@@ -1,4 +1,5 @@
 import AccountMap from './AccountMap';
+import MappedTimesheetEntry from './MappedTimesheetEntry';
 import Timesheet from './Timesheet';
 
 /**
@@ -15,21 +16,9 @@ class MappedTimesheet implements Timesheet {
     }
 
     public getEntries() {
-        return this.delegate.getEntries()
-            .map(entry => ({
-                ...entry,
-                account: this.mapAccount(entry.account)
-            }));
-    }
-
-    private mapAccount(account: string) {
-        const {accountMap} = this;
-
-        if (!(account in accountMap)) {
-            throw new Error(`No mapping for account ${account} configured!`);
-        }
-
-        return accountMap[account];
+        return this.delegate.getEntries().map(
+            entry => new MappedTimesheetEntry(this.accountMap, entry)
+        );
     }
 }
 

@@ -95,9 +95,9 @@ export default class MaconomyClient {
             (promise, entry) => promise.then(
                 async lineCache => ({
                     ...lineCache,
-                    [entry.account]: await this.updateDateWith(
+                    [entry.getAccount()]: await this.updateDateWith(
                         entry,
-                        lineCache[entry.account]
+                        lineCache[entry.getAccount()]
                     )
                 })
             ),
@@ -106,7 +106,7 @@ export default class MaconomyClient {
     }
 
     private async updateDateWith(entry: TimesheetEntry, lineKey?: string) {
-        const {date, account, seconds, description} = entry;
+        const account = entry.getAccount();
         const [projectId, task] = account.split('/');
         const sessionId = await this.sessionId;
 
@@ -114,7 +114,7 @@ export default class MaconomyClient {
             throw new Error(`Invalid Maconomy account/task id: ${account}`);
         }
 
-        const entryDate = formatDate(new Date(date));
+        const entryDate = formatDate(new Date(entry.getDate()));
 
         const response = await this.executeRpc(
             {
@@ -125,8 +125,8 @@ export default class MaconomyClient {
                         Favorite: '',
                         JobNumber: projectId,
                         TaskName: task,
-                        DailyDescription: description,
-                        NumberOf: `'${toHours(seconds)}'`,
+                        DailyDescription: entry.getDescription(),
+                        NumberOf: `'${toHours(entry.getSeconds())}'`,
                         EntryText: undefined,
                         PermanentLine: 'false',
                         InternalJob: 'true',

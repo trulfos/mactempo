@@ -3,6 +3,7 @@ import {CookieJar} from 'tough-cookie';
 
 import Credentials from './Credentials';
 import GroupedTimesheet from './GroupedTimesheet';
+import LiteralTimesheetEntry from './LiteralTimesheetEntry';
 import Timesheet, {TimesheetEntry} from './Timesheet';
 
 /**
@@ -50,12 +51,12 @@ class TempoClient {
                     issue: {key}
                 } = worklog;
 
-                return {
+                return new LiteralTimesheetEntry({
                     date: dateStarted.split('T')[0],
                     account: await this.getAccount(key),
                     seconds: timeSpentSeconds,
                     description: key
-                };
+                });
             }) as Array<Promise<TimesheetEntry>>
         );
 
