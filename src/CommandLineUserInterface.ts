@@ -18,9 +18,8 @@ replaced.
 Have fun!
 `;
 
-// TODO: Rename (command line interface user interface??)
 // tslint:disable:no-console
-class CliUserInterface implements UserInterface {
+class CommandLineUserInterface implements UserInterface {
     constructor() {
         console.log(greeting);
     }
@@ -62,4 +61,6 @@ function dateValidator(value: string) {
     return new Date(value);
 }
 
-export default CliUserInterface;
+export {
+    CommandLineUserInterface as default
+};
