@@ -7,7 +7,7 @@ Note that this solution is slightly hacky and may not work for other
 tempo/maconomy setups than the one it has been created for.
 
 
-## Basic usage
+## Usage
 
 Create a `.mactempo` file in your home directory with the following structure:
 ```
@@ -31,7 +31,7 @@ Run `mactempo` and follow the instuctions.
 
 For more information on how the application behaves, read the tests.
 
-## Proxy configuration
+### Proxy configuration
 
 This application uses the `global-tunnel-ng` package for proxy support. Set the
 `http_proxy`, `https_proxy` and `no_proxy` environment variables.
@@ -47,7 +47,7 @@ In the above example, Jira resides on the local network and requires no
 proxying, while all other hosts are accessed through proxy.mycompany.com.
 
 
-## Custom certificate authorities
+### Custom certificate authorities
 
 Some companies use their own certificate authorities. Use the environment
 variable
