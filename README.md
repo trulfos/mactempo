@@ -54,12 +54,6 @@ variable
 [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file)
 for these cases.
 
-## Aknowledgements
-
-The Maconomy integration is based on the
-[`maconomy`](https://github.com/Hanse/maconomy) npm package by Hanse and
-would never be possible without his reverse engineering.
-
 ## Development
 
 Pull requests are welcome, but do ensure
@@ -93,3 +87,9 @@ Run
 yarn lint
 ```
 to get a list of lint errors (if any).
+
+## Acknowledgments
+
+The Maconomy integration is based on the
+[`maconomy`](https://github.com/Hanse/maconomy) npm package by Hanse and
+would never be possible without his reverse engineering.
