@@ -24,8 +24,13 @@ const maconomyMock = new MaconomyMock(
 
 function configureApp(accountMap: AccountMap, date?: string) {
     const configMock = new LiteralConfig({
-        jiraBase: 'https://jira.mycompany.com',
-        maconomyBase: 'https://touch.mycompany.com',
+        jira: {
+            baseUrl: 'https://jira.mycompany.com',
+            accountField: 'customfield_11961',
+        },
+        maconomy: {
+            baseUrl: 'https://touch.mycompany.com'
+        },
         accountMap
     });
 

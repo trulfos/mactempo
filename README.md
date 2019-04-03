@@ -12,20 +12,26 @@ tempo/maconomy setups than the one it has been created for.
 Create a `.mactempo` file in your home directory with the following structure:
 ```
 {
-	"jiraBase": "https://jira.yourcompany.com",
-	"maconomyBase": "https://touch.yourcompany.com",
-	"accountMap": {
+    "jira": {
+        "baseUrl": "https://jira.yourcompany.com",
+        "accountField": "customfield_2312"
+    },
+    "maconomy": {
+        "baseUrl": "https://touch.yourcompany.com"
+    },
+    "accountMap": {
         "tempoAccount1": "maconomyAccount1/maconomyTask1",
         "tempoAccount2": "maconomyAccount2/maconomyTask2",
         ...
-	}
+    }
 }
 ```
 
-The `maconomyBase` must be the base address for the maconomy touch API, not the
-regular web client. The `accountMap` is used to map accounts in Tempo to correct
-accounts in Maconomy. An error will be thrown whenever an account is missing in
-the map, but present in the Tempo worklog.
+The `maconomy.baseUrl` must be the base address for the maconomy touch API, not
+the regular web client. The `accountMap` is used to map accounts in Tempo to
+correct accounts in Maconomy. An error will be thrown whenever an account is
+missing in the map, but present in the Tempo worklog. Finally, the
+`jira.accountField` specifies which field in your issue describes the account.
 
 Run `mactempo` and follow the instuctions. For more information on how the
 application behaves, read the tests.

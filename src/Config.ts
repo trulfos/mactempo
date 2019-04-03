@@ -1,7 +1,8 @@
 import AccountMap from './AccountMap';
+import JiraConfig from './JiraConfig';
 
 interface Config {
-    getJiraBase(): string;
+    getJiraConfig(): JiraConfig;
     getMaconomyBase(): string;
     getAccountMap(): AccountMap;
 }

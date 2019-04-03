@@ -7,23 +7,26 @@ import ConfigObject from './ConfigObject';
  * The file is expected to reside in the user home directory.
  */
 class LiteralConfig implements Config {
-  private readonly config: ConfigObject;
+    private readonly config: ConfigObject;
 
-  constructor(config: ConfigObject) {
-    this.config = config;
-  }
+    constructor(config: ConfigObject) {
+        this.config = config;
+    }
 
-  public getMaconomyBase() {
-    return this.config.maconomyBase;
-  }
+    public getMaconomyBase() {
+        return this.config.maconomy.baseUrl;
+    }
 
-  public getJiraBase() {
-    return this.config.jiraBase;
-  }
+    public getJiraConfig() {
+        return {
+            getBaseUrl: () => this.config.jira.baseUrl,
+            getAccountField: () => this.config.jira.accountField
+        };
+    }
 
-  public getAccountMap() {
-    return this.config.accountMap;
-  }
+    public getAccountMap() {
+        return this.config.accountMap;
+    }
 }
 
 export default LiteralConfig;

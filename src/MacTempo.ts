@@ -18,7 +18,7 @@ class MacTempo {
         const week = await ui.getWeek();
 
         const jiraCredentials = await ui.getCredentials('Jira');
-        const tempoClient = new TempoClient(config.getJiraBase(), jiraCredentials);
+        const tempoClient = new TempoClient(config.getJiraConfig(), jiraCredentials);
         const timesheet = await tempoClient.getTimesheet(week.getRange());
         await tempoClient.logout();
 

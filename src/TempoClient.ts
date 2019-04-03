@@ -3,6 +3,7 @@ import {CookieJar} from 'tough-cookie';
 
 import Credentials from './Credentials';
 import GroupedTimesheet from './GroupedTimesheet';
+import JiraConfig from './JiraConfig';
 import LiteralTimesheetEntry from './LiteralTimesheetEntry';
 import Timesheet, {TimesheetEntry} from './Timesheet';
 
@@ -12,18 +13,18 @@ import Timesheet, {TimesheetEntry} from './Timesheet';
  * http://developer.tempo.io/doc/timesheets/api/rest/latest
  */
 class TempoClient {
-    private url: string;
+    private config: JiraConfig;
     private username: string;
     private cookieJar: Promise<CookieJar>;
     private keyCache: {[issue: string]: Promise<string>} = {};
 
-    constructor(url: string, credentials: Credentials) {
-        this.url = url;
+    constructor(config: JiraConfig, credentials: Credentials) {
+        this.config = config;
         this.username = credentials.username;
         const cookieJar = new CookieJar();
 
         this.cookieJar = got.post(
-            `${url}/rest/auth/1/session`,
+            `${this.getUrl()}/rest/auth/1/session`,
             {
                 cookieJar,
                 json: true,
@@ -35,7 +36,7 @@ class TempoClient {
 
     public async logout() {
         await got.delete(
-            `${this.url}/rest/auth/1/session`,
+            `${this.getUrl()}/rest/auth/1/session`,
             {cookieJar: await this.cookieJar}
         );
     }
@@ -66,7 +67,7 @@ class TempoClient {
     }
 
     public async fetchWorklogs(dateRange: {from: Date; to: Date}) {
-        const worklogsUrl = `${this.url}/rest/tempo-timesheets/3/worklogs` +
+        const worklogsUrl = `${this.getUrl()}/rest/tempo-timesheets/3/worklogs` +
             `?dateFrom=${toSimpleIsoDate(dateRange.from)}` +
             `&dateTo=${toSimpleIsoDate(dateRange.to)}` +
             `&username=${this.username}`;
@@ -81,11 +82,9 @@ class TempoClient {
             return keyCache[issueKey];
         }
 
-        // TODO: This should be customizable?
-        const field = 'customfield_11961';
-
+        const field = this.config.getAccountField();
         const result = this.request(
-                `${this.url}/rest/api/2/issue/${issueKey}?fields=${field}`
+                `${this.getUrl()}/rest/api/2/issue/${issueKey}?fields=${field}`
             )
             .then((response: any) => response.body.fields[field].key);
 
@@ -101,6 +100,10 @@ class TempoClient {
         };
 
         return got(url, options);
+    }
+
+    private getUrl() {
+        return this.config.getBaseUrl();
     }
 }
 
