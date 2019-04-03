@@ -1,7 +1,7 @@
 # Mactempo magic hour transfer
 
 This application transfer hours from Tempo to Maconomy, providing instant
-relief for consultants trackig their hours in both systems.
+relief for consultants tracking their hours in both systems.
 
 Note that this solution is slightly hacky and may not work for other
 tempo/maconomy setups than the one it has been created for.
@@ -27,9 +27,8 @@ regular web client. The `accountMap` is used to map accounts in Tempo to correct
 accounts in Maconomy. An error will be thrown whenever an account is missing in
 the map, but present in the Tempo worklog.
 
-Run `mactempo` and follow the instuctions.
-
-For more information on how the application behaves, read the tests.
+Run `mactempo` and follow the instuctions. For more information on how the
+application behaves, read the tests.
 
 ### Proxy configuration
 
@@ -49,10 +48,9 @@ proxying, while all other hosts are accessed through proxy.mycompany.com.
 
 ### Custom certificate authorities
 
-Some companies use their own certificate authorities. Use the environment
-variable
-[`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file)
-for these cases.
+Some companies use their own certificate authorities. In these cases, set the
+environment variable
+[`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file).
 
 ## Development
 
