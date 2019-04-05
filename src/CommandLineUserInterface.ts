@@ -36,8 +36,8 @@ class CommandLineUserInterface implements UserInterface {
         console.log(`\nPlease provide your credentials for ${applicationName}`);
 
         return {
-            password: await password('Password: '),
-            username: await prompt('Username: ')
+            username: await prompt('Username: '),
+            password: await password('Password: ')
         };
     }
 
