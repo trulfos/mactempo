@@ -5,6 +5,7 @@
   "main": "dist/src/index.js",
   "author": "Truls Rustad Fossum <trulfos@gmail.com>",
   "license": "MIT",
+  "files": ["dist/src", "bin"],
   "scripts": {
     "build": "tsc",
     "clean": "rm -r dist",
@@ -13,7 +14,7 @@
     "lint": "tslint --project ."
   },
   "bin": {
-    "mactempo": "dist/src/cli.js"
+    "mactempo": "bin/mactempo.js"
   },
   "dependencies": {
     "global-tunnel-ng": "^2.6.0",
