@@ -10,12 +10,9 @@ const greeting = `
 |_|  |_|\\__,_|\\___||_|\\___|_| |_| |_| .__/ \\___/
                                     |_|
 -------------------------------------------------
-Your highway from Tempo to Maconomy. Please remember
-to double check the hours after import and remember
-that existing hours for the mapped accounts will be
-replaced.
+Your highway from Tempo to Maconomy.
 
-Have fun!
+Please remember to double check the hours after import and have fun.
 `;
 
 // tslint:disable:no-console
