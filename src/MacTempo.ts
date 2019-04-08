@@ -30,34 +30,29 @@ class MacTempo {
     }
 
     private async fetchJiraTimesheets(week: Week) {
-        const {config} = this;
-
-        const jiraConfig = config.getJiraConfig();
-        const jiraCredentials = await this.ui.getCredentials(
+        const config = this.config.getJiraConfig();
+        const credentials = await this.ui.getCredentials(
             'Jira',
-            jiraConfig.getUsername()
+            config.getUsername()
         );
-        const tempoClient = new TempoClient(
-            config.getJiraConfig(),
-            jiraCredentials
-        );
+        const client = new TempoClient(config, credentials);
 
-        const timesheet = await tempoClient.getTimesheet(week.getRange());
-        await tempoClient.logout();
+        const timesheet = await client.getTimesheet(week.getRange());
+        await client.logout();
 
         return timesheet;
     }
 
     private async updateMaconomy(timesheet: Timesheet) {
-        const maconomyConfig = this.config.getMaconomyConfig();
-        const maconomyCredentials = await this.ui.getCredentials(
+        const config = this.config.getMaconomyConfig();
+        const credentials = await this.ui.getCredentials(
             'Maconomy',
-            maconomyConfig.getUsername()
+            config.getUsername()
         );
 
         await new MaconomyClient(
-                maconomyConfig.getBaseUrl(),
-                maconomyCredentials
+                config.getBaseUrl(),
+                credentials
             )
             .updateWith(timesheet);
     }
