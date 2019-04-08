@@ -33,6 +33,11 @@ correct accounts in Maconomy. An error will be thrown whenever an account is
 missing in the map, but present in the Tempo worklog. Finally, the
 `jira.accountField` specifies which field in your issue describes the account.
 
+In addition to the fields in the example above, one can also specify a
+`username` property both for Maconomy and Jira. This will be assumed to be the
+username for Maconomy and Jira respectively, and may thus save some typing each
+week.
+
 Run `mactempo` and follow the instuctions. For more information on how the
 application behaves, read the tests.
 
