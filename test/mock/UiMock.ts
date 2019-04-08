@@ -1,20 +1,45 @@
 import {Credentials, UserInterface, Week} from '../../src';
 
-class UiMock implements UserInterface {
-    private readonly credentials: Credentials;
-    private readonly date: Date;
+interface CredentialsCall {
+    application: string;
+    username?: string;
+}
 
-    constructor(credentials: Credentials, date: Date) {
+class UiMock implements UserInterface {
+    private credentials: Credentials;
+    private calls: CredentialsCall[] = [];
+    private date?: Date;
+
+    constructor(credentials: Credentials) {
         this.credentials = credentials;
-        this.date = date;
     }
 
     public async getWeek() {
-        return new Week(this.date);
+        const {date} = this;
+
+        if (!date) {
+            throw new Error('No date set in uiMock');
+        }
+
+        return new Week(date);
     }
 
-    public async getCredentials() {
+    public async getCredentials(application: string, username?: string) {
+        this.calls.push({
+            application,
+            username
+        });
+
         return this.credentials;
+    }
+
+    public reset(date: Date) {
+        this.date = date;
+        this.calls = [];
+    }
+
+    public getCalls() {
+        return this.calls;
     }
 }
 

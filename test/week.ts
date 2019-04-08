@@ -15,7 +15,7 @@ function issueOn(date: string) {
 }
 
 test('considers sunday the last day of the week', async t => {
-    const app = configureApp(accountMap, '2019-03-23');
+    const app = configureApp({accountMap}, '2019-03-23');
 
     maconomyMock.reset();
     tempoMock.reset([
@@ -37,7 +37,7 @@ test('considers sunday the last day of the week', async t => {
 });
 
 test('supports divided weeks at boundaries between months', async t => {
-    const app = configureApp(accountMap, '2019-02-27');
+    const app = configureApp({accountMap}, '2019-02-27');
 
     maconomyMock.reset();
     tempoMock.reset([
@@ -57,7 +57,7 @@ test('supports divided weeks at boundaries between months', async t => {
 });
 
 test('handles coinciding end of week and month', async t => {
-    const app = configureApp(accountMap, '2019-03-31');
+    const app = configureApp({accountMap}, '2019-03-31');
 
     maconomyMock.reset();
     tempoMock.reset([

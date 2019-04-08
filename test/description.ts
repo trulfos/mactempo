@@ -1,9 +1,10 @@
 import test from 'tape';
 import {configureApp, maconomyMock, tempoMock} from './mock';
 
-const app = configureApp({
+const accountMap = {
     '9343X': '3423/1004'
-});
+};
+const app = configureApp({accountMap});
 
 test('uses Jira issue numbers for task description in Maconomy', async t => {
     tempoMock.reset([{

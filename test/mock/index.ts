@@ -1,6 +1,7 @@
 import nock from 'nock';
-import {AccountMap, LiteralConfig, MacTempo} from '../../src';
+import {LiteralConfig, MacTempo} from '../../src';
 import MaconomyMock from './MaconomyMock';
+import PartialConfig from './PartialConfig';
 import TempoMock from './TempoMock';
 import UiMock from './UiMock';
 
@@ -22,22 +23,29 @@ const maconomyMock = new MaconomyMock(
     credentials
 );
 
-function configureApp(accountMap: AccountMap, date?: string) {
+const uiMock = new UiMock(credentials);
+
+function configureApp(
+    config: PartialConfig,
+    date: string = '2019-03-18'
+) {
     const configMock = new LiteralConfig({
+        accountMap: {},
+        ...config,
         jira: {
             baseUrl: 'https://jira.mycompany.com',
             accountField: 'customfield_11961',
+            ...config.jira
         },
         maconomy: {
-            baseUrl: 'https://touch.mycompany.com'
-        },
-        accountMap
+            baseUrl: 'https://touch.mycompany.com',
+            ...config.maconomy
+        }
     });
 
-    const uiMock = new UiMock(
-        credentials,
-        new Date(date || '2019-03-18')
-    );
+    tempoMock.reset();
+    maconomyMock.reset();
+    uiMock.reset(new Date(date));
 
     return new MacTempo(
         uiMock,
@@ -48,5 +56,6 @@ function configureApp(accountMap: AccountMap, date?: string) {
 export {
     tempoMock,
     maconomyMock,
+    uiMock,
     configureApp
 };

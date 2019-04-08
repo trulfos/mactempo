@@ -5,3 +5,4 @@ export {default as IncorrectHoursError} from './IncorrectHoursError';
 export {default as Week} from './Week';
 export {default as UserInterface} from './UserInterface';
 export {default as AccountMap} from './AccountMap';
+export {default as ConfigObject} from './ConfigObject';

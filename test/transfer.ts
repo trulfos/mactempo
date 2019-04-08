@@ -7,10 +7,11 @@ import {configureApp, maconomyMock, tempoMock} from './mock';
  * considering mostly the base cases.
  */
 
-const app = configureApp({
+const accountMap = {
     '9343X': '3423/1004',
     '3423-4': '4234/1002'
-});
+};
+const app = configureApp({accountMap});
 
 test('copies nothing to Maconomy when no worklogs exist', async t => {
     tempoMock.reset();
