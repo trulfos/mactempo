@@ -1,9 +1,10 @@
 import AccountMap from './AccountMap';
 import JiraConfig from './JiraConfig';
+import MaconomyConfig from './MaconomyConfig';
 
 interface Config {
     getJiraConfig(): JiraConfig;
-    getMaconomyBase(): string;
+    getMaconomyConfig(): MaconomyConfig;
     getAccountMap(): AccountMap;
 }
 

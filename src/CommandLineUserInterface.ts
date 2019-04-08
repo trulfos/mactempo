@@ -29,11 +29,15 @@ class CommandLineUserInterface implements UserInterface {
         );
     }
 
-    public async getCredentials(applicationName: string) {
+    public async getCredentials(applicationName: string, username?: string) {
         console.log(`\nPlease provide your credentials for ${applicationName}`);
 
+        if (username) {
+            console.log(`(using username ${username})`);
+        }
+
         return {
-            username: await prompt('Username: '),
+            username: username || await prompt('Username: '),
             password: await password('Password: ')
         };
     }

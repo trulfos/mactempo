@@ -13,14 +13,22 @@ class LiteralConfig implements Config {
         this.config = config;
     }
 
-    public getMaconomyBase() {
-        return this.config.maconomy.baseUrl;
+    public getMaconomyConfig() {
+        const {maconomy} = this.config;
+
+        return {
+            getBaseUrl: () => maconomy.baseUrl,
+            getUsername: () => maconomy.username
+        };
     }
 
     public getJiraConfig() {
+        const {jira} = this.config;
+
         return {
-            getBaseUrl: () => this.config.jira.baseUrl,
-            getAccountField: () => this.config.jira.accountField
+            getBaseUrl: () => jira.baseUrl,
+            getAccountField: () => jira.accountField,
+            getUsername: () => jira.username
         };
     }
 
