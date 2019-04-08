@@ -35,6 +35,10 @@ class LiteralConfig implements Config {
     public getAccountMap() {
         return this.config.accountMap;
     }
+
+    public getLunchConfig() {
+        return this.config.lunch;
+    }
 }
 
 export default LiteralConfig;

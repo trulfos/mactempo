@@ -1,4 +1,5 @@
 import AccountMap, {isAccountMap} from './AccountMap';
+import LunchConfig, {isLunchConfig} from './LunchConfig';
 
 interface ConfigObject {
     jira: {
@@ -11,6 +12,7 @@ interface ConfigObject {
         username?: string;
     };
     accountMap: AccountMap;
+    lunch?: LunchConfig;
 }
 
 function isConfigObject(value: any): value is ConfigObject {
@@ -22,7 +24,8 @@ function isConfigObject(value: any): value is ConfigObject {
         typeof value.maconomy === 'object' && value.maconomy !== null &&
         typeof value.maconomy.baseUrl === 'string' &&
         (!value.maconomy.username || typeof value.maconomy.username === 'string') &&
-        isAccountMap(value.accountMap);
+        isAccountMap(value.accountMap) &&
+        (!value.lunch || isLunchConfig(value.lunch));
 }
 
 export {

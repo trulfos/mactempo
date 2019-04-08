@@ -33,13 +33,35 @@ correct accounts in Maconomy. An error will be thrown whenever an account is
 missing in the map, but present in the Tempo worklog. Finally, the
 `jira.accountField` specifies which field in your issue describes the account.
 
-In addition to the fields in the example above, one can also specify a
-`username` property both for Maconomy and Jira. This will be assumed to be the
-username for Maconomy and Jira respectively, and may thus save some typing each
-week.
 
 Run `mactempo` and follow the instuctions. For more information on how the
 application behaves, read the tests.
+
+
+#### Predefined usernames
+
+In addition to the fields in the example config above, one may also specify a
+`username` property, both for Maconomy and Jira. This will be assumed to be the
+username for Maconomy and Jira respectively, and may thus save some typing each
+week.
+
+
+#### Automatic lunch
+
+Finally, one may specify automatic lunch by providing a `lunch` key with the
+following structure in the configuration file:
+```
+{
+    "account": "myLunchAccount/myLunchTask",
+    "seconds": 1800,
+    "minWorkSeconds": 21600,
+    "description": "Lunch"
+}
+```
+No lunch will be added on days where the total hours logged in jira totals less
+than the `minWorkSeconds` value. When lunch is added, it will be a `seconds`
+long entry on the given account, with the given description.
+
 
 ### Proxy configuration
 
@@ -63,12 +85,14 @@ Some companies use their own certificate authorities. In these cases, set the
 environment variable
 [`NODE_EXTRA_CA_CERTS`](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file).
 
+
 ## Development
 
 Pull requests are welcome, but do ensure
     * all tests are running and that new
     * tests are added for the new functionality and bug fixes, and
     * there are no lint errors.
+
 
 ### Running the tests
 
@@ -89,6 +113,7 @@ readable format and can be piped to any software claiming to prettify the Test
 Anything Protocol (TAP), such as
 [tap-spec](https://github.com/scottcorgan/tap-spec).
 
+
 ### Linting
 
 Run
@@ -96,6 +121,7 @@ Run
 yarn lint
 ```
 to get a list of lint errors (if any).
+
 
 ## Acknowledgments
 

@@ -1,4 +1,5 @@
 import Config from './Config';
+import LunchTimesheet from './LunchTimesheet';
 import MaconomyClient from './MaconomyClient';
 import MappedTimesheet from './MappedTimesheet';
 import TempoClient from './TempoClient';
@@ -19,14 +20,19 @@ class MacTempo {
         const {ui, config} = this;
         const week = await ui.getWeek();
 
-        const timesheet = await this.fetchJiraTimesheets(week);
+        let timesheet = await this.fetchJiraTimesheets(week);
 
-        const mappedTimesheet = new MappedTimesheet(
+        timesheet = new MappedTimesheet(
             config.getAccountMap(),
             timesheet
         );
 
-        await this.updateMaconomy(mappedTimesheet);
+        const lunchConfig = config.getLunchConfig();
+        if (lunchConfig) {
+            timesheet = new LunchTimesheet(lunchConfig, timesheet);
+        }
+
+        await this.updateMaconomy(timesheet);
     }
 
     private async fetchJiraTimesheets(week: Week) {
