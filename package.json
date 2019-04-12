@@ -1,6 +1,6 @@
 {
   "name": "mactempo",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Auto-transfer hours from Tempo to Maconomy",
   "main": "dist/src/index.js",
   "author": "Truls Rustad Fossum <trulfos@gmail.com>",
