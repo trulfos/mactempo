@@ -1,7 +1,6 @@
 import {existsSync, readFileSync} from 'fs';
 import {homedir} from 'os';
 import {resolve} from 'path';
-import {isConfigObject} from './ConfigObject';
 import LiteralConfig from './LiteralConfig';
 
 /**
@@ -13,10 +12,6 @@ class FileConfig extends LiteralConfig {
     constructor() {
         const path = getPath();
         const configCandidate = readJson(path);
-
-        if (!isConfigObject(configCandidate)) {
-            throw new Error(`Invalid config in ${path}`);
-        }
 
         super(configCandidate);
     }

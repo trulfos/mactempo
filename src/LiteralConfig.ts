@@ -1,5 +1,6 @@
 import Config from './Config';
-import ConfigObject from './ConfigObject';
+import ConfigObject, {isConfigObject} from './ConfigObject';
+import InvalidConfigError from './InvalidConfigError';
 
 /**
  * Config based on file contents.
@@ -9,7 +10,11 @@ import ConfigObject from './ConfigObject';
 class LiteralConfig implements Config {
     private readonly config: ConfigObject;
 
-    constructor(config: ConfigObject) {
+    constructor(config: any) {
+        if (!isConfigObject(config)) {
+            throw new InvalidConfigError();
+        }
+
         this.config = config;
     }
 

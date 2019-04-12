@@ -8,8 +8,8 @@ interface LunchConfig {
 function isLunchConfig(value: any): value is LunchConfig {
     return typeof value === 'object' && value &&
         typeof value.account === 'string' &&
-        typeof value.length === 'number' &&
-        typeof value.minHours === 'number' &&
+        typeof value.seconds === 'number' &&
+        typeof value.minWorkSeconds === 'number' &&
         typeof value.description === 'string';
 }
 
